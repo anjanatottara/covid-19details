@@ -2,7 +2,7 @@ const express = require("express");
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
 const path = require("path");
-const databasePath = path.join(__dirname, "moviesData.db");
+const databasePath = path.join(__dirname, "covid19India.db");
 const app = express();
 app.use(express.json());
 let database = null;
@@ -64,7 +64,9 @@ app.post("/districts/", async (request, response) => {
 });
 app.get("/districts/:districtId/", async (request, response) => {
   const { districtId } = request.params;
-  const getDistrictQuery = `SELECT * FROM district_id=${districtId};`;
+  const getDistrictQuery = `SELECT * FROM district WHERE district_id=${districtId};`;
+  const District = await database.get(getDistrictQuery);
+  response.send(convertDistrictDbObjectToResponseObject(District));
 });
 
 app.delete("/districts/:districtId/", async (request, response) => {
