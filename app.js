@@ -59,7 +59,7 @@ app.post("/districts/", async (request, response) => {
   const { districtName, stateId, cases, cured, active, deaths } = request.body;
   const postDistrictQuery = `INSERT INTO district (district_name,state_id,cases,cured,active,deaths)
      VALUES ('${districtName}',${stateId},${cases},${cured},${active},${deaths});`;
-  await database.run(getDistrictQuery);
+  await database.run(postDistrictQuery);
   response.send("District Successfully Added");
 });
 app.get("/districts/:districtId/", async (request, response) => {
